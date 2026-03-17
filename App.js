@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView, ScrollView } from "react-native";
 import { useState } from "react";
 import unipar from "./assets/unipar.png";
 
@@ -35,73 +35,96 @@ export default function App() {
     if (time === 'eles' && eles > 0) setEles(eles - 1);
   };
 
+  const reiniciar = () => {
+    setNos(0);
+    setEles(0);
+  };
+
+  const novoJogo = () => {
+    setNos(0);
+    setEles(0);
+    setVitoriasNos(0);
+    setVitoriasEles(0);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image source={unipar} style={styles.logo} />
-      </View>
+      <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}>
+        <View style={styles.header}>
+          <Image source={unipar} style={styles.logo} />
+        </View>
 
-      <View style={styles.placarContainer}>
-        <View style={styles.coluna}>
-          <Text style={styles.titulo}>NÓS</Text>
-          <Text style={styles.numero}>{nos}</Text>
-          <Text style={styles.vitorias}>Ganhou {vitoriasNos}</Text>
-          
-          <View style={styles.gradeBotoes}>
-            <View style={styles.linhaHorizontal}>
-              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('nos', 1)}>
-                <Text style={styles.textoBotao}>+</Text>
+        <View style={styles.placarContainer}>
+          <View style={styles.coluna}>
+            <Text style={styles.titulo}>NÓS</Text>
+            <Text style={styles.numero}>{nos}</Text>
+            <Text style={styles.vitorias}>Ganhou {vitoriasNos}</Text>
+            
+            <View style={styles.gradeBotoes}>
+              <View style={styles.linhaHorizontal}>
+                <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('nos', 1)}>
+                  <Text style={styles.textoBotao}>+</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('nos')}>
+                  <Text style={styles.textoBotao}>-</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('nos', 3)}>
+                <Text style={styles.textoAposta}>TRUCO</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('nos')}>
-                <Text style={styles.textoBotao}>-</Text>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('nos', 6)}>
+                <Text style={styles.textoAposta}>SEISSS</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('nos', 9)}>
+                <Text style={styles.textoAposta}>NOVEEE</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('nos', 12)}>
+                <Text style={styles.textoAposta}>DOZI</Text>
               </TouchableOpacity>
             </View>
+          </View>
 
-            <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('nos', 3)}>
-              <Text style={styles.textoAposta}>TRUCO</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('nos', 6)}>
-              <Text style={styles.textoAposta}>SEISSS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('nos', 9)}>
-              <Text style={styles.textoAposta}>NOVEEE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('nos', 12)}>
-              <Text style={styles.textoAposta}>DOZI</Text>
-            </TouchableOpacity>
+          <View style={styles.coluna}>
+            <Text style={styles.titulo}>ELES</Text>
+            <Text style={styles.numero}>{eles}</Text>
+            <Text style={styles.vitorias}>Ganhou {vitoriasEles}</Text>
+            
+            <View style={styles.gradeBotoes}>
+              <View style={styles.linhaHorizontal}>
+                <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('eles', 1)}>
+                  <Text style={styles.textoBotao}>+</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('eles')}>
+                  <Text style={styles.textoBotao}>-</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('eles', 3)}>
+                <Text style={styles.textoAposta}>TRUCO</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('eles', 6)}>
+                <Text style={styles.textoAposta}>SEISSS</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('eles', 9)}>
+                <Text style={styles.textoAposta}>NOVEEE</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('eles', 12)}>
+                <Text style={styles.textoAposta}>DOZI</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
-        <View style={styles.coluna}>
-          <Text style={styles.titulo}>ELES</Text>
-          <Text style={styles.numero}>{eles}</Text>
-          <Text style={styles.vitorias}>Ganhou {vitoriasEles}</Text>
-          
-          <View style={styles.gradeBotoes}>
-            <View style={styles.linhaHorizontal}>
-              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('eles', 1)}>
-                <Text style={styles.textoBotao}>+</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('eles')}>
-                <Text style={styles.textoBotao}>-</Text>
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('eles', 3)}>
-              <Text style={styles.textoAposta}>TRUCO</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('eles', 6)}>
-              <Text style={styles.textoAposta}>SEISSS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('eles', 9)}>
-              <Text style={styles.textoAposta}>NOVEEE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('eles', 12)}>
-              <Text style={styles.textoAposta}>DOZI</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.botaoAcao} onPress={reiniciar}>
+            <Text style={styles.textoAcao}>REINICIAR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botaoAcao} onPress={novoJogo}>
+            <Text style={styles.textoAcao}>NOVO JOGO</Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -110,11 +133,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
   },
   header: {
     marginTop: 30,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   logo: {
     width: 130,
@@ -140,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#333',
-    marginTop: 15,
+    marginTop: 10,
   },
   vitorias: {
     fontSize: 16,
@@ -170,6 +192,25 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  footer: {
+    marginTop: 30,
+    gap: 10,
+    width: '100%',
+    alignItems: 'center'
+  },
+  botaoAcao: {
+    width: 200,
+    height: 50,
+    backgroundColor: '#1a0f0f',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textoAcao: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   corMais: { backgroundColor: '#005D3B' },
   corMenos: { backgroundColor: '#800A26' },
