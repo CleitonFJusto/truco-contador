@@ -3,67 +3,88 @@ import { useState } from "react";
 import unipar from "./assets/unipar.png";
 
 export default function App() {
-  // Criamos dois estados independentes
   const [nos, setNos] = useState(10);
   const [eles, setEles] = useState(10);
 
-  // Funções genéricas para facilitar
-  const ajustarPlacar = (time, operacao) => {
+  const adicionarPontos = (time, pontos) => {
     if (time === 'nos') {
-      if (operacao === '+' && nos < 12) setNos(nos + 1);
-      if (operacao === '-' && nos > 0) setNos(nos - 1);
+      const novoValor = nos + pontos;
+      setNos(novoValor >= 12 ? 12 : novoValor);
     } else {
-      if (operacao === '+' && eles < 12) setEles(eles + 1);
-      if (operacao === '-' && eles > 0) setEles(eles - 1);
+      const novoValor = eles + pontos;
+      setEles(novoValor >= 12 ? 12 : novoValor);
     }
+  };
+
+  const removerPonto = (time) => {
+    if (time === 'nos' && nos > 0) setNos(nos - 1);
+    if (time === 'eles' && eles > 0) setEles(eles - 1);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.header}>
         <Image source={unipar} style={styles.logo} />
       </View>
 
-      
       <View style={styles.placarContainer}>
         
-        
+
         <View style={styles.coluna}>
           <Text style={styles.titulo}>NÓS</Text>
           <Text style={styles.numero}>{nos}</Text>
-          <View style={styles.botoesContainer}>
-            <TouchableOpacity 
-              style={[styles.botao, styles.botaoMais]} 
-              onPress={() => ajustarPlacar('nos', '+')}
-            >
-              <Text style={styles.textoBotao}>+</Text>
+          
+          <View style={styles.gradeBotoes}>
+            <View style={styles.linhaHorizontal}>
+              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('nos', 1)}>
+                <Text style={styles.textoBotao}>+</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('nos')}>
+                <Text style={styles.textoBotao}>-</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('nos', 3)}>
+              <Text style={styles.textoAposta}>TRUCO</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.botao, styles.botaoMenos]} 
-              onPress={() => ajustarPlacar('nos', '-')}
-            >
-              <Text style={styles.textoBotao}>-</Text>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('nos', 6)}>
+              <Text style={styles.textoAposta}>SEISSS</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('nos', 9)}>
+              <Text style={styles.textoAposta}>NOVEEE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('nos', 12)}>
+              <Text style={styles.textoAposta}>DOZI</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        
+
         <View style={styles.coluna}>
           <Text style={styles.titulo}>ELES</Text>
           <Text style={styles.numero}>{eles}</Text>
-          <View style={styles.botoesContainer}>
-            <TouchableOpacity 
-              style={[styles.botao, styles.botaoMais]} 
-              onPress={() => ajustarPlacar('eles', '+')}
-            >
-              <Text style={styles.textoBotao}>+</Text>
+          
+          <View style={styles.gradeBotoes}>
+            <View style={styles.linhaHorizontal}>
+              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMais]} onPress={() => adicionarPontos('eles', 1)}>
+                <Text style={styles.textoBotao}>+</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.botaoQuadrado, styles.corMenos]} onPress={() => removerPonto('eles')}>
+                <Text style={styles.textoBotao}>-</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={[styles.botaoLongo, styles.corTruco]} onPress={() => adicionarPontos('eles', 3)}>
+              <Text style={styles.textoAposta}>TRUCO</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.botao, styles.botaoMenos]} 
-              onPress={() => ajustarPlacar('eles', '-')}
-            >
-              <Text style={styles.textoBotao}>-</Text>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corSeis]} onPress={() => adicionarPontos('eles', 6)}>
+              <Text style={styles.textoAposta}>SEISSS</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corNove]} onPress={() => adicionarPontos('eles', 9)}>
+              <Text style={styles.textoAposta}>NOVEEE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.botaoLongo, styles.corDoze]} onPress={() => adicionarPontos('eles', 12)}>
+              <Text style={styles.textoAposta}>DOZI</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -77,58 +98,77 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
   },
   header: {
-    alignItems: 'center',
-    marginTop: 40,
-    marginBottom: 50,
+    marginTop: 30,
+    marginBottom: 40,
   },
   logo: {
-    width: 150,
+    width: 130,
     height: 60,
     resizeMode: 'contain',
   },
   placarContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+    justifyContent: 'center',
+    gap: 20, 
   },
   coluna: {
     alignItems: 'center',
-    flex: 1,
+    width: 140, 
   },
   titulo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#555',
-    marginBottom: 20,
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#666',
+    letterSpacing: 1,
   },
   numero: {
-    fontSize: 80,
+    fontSize: 60,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 30,
+    marginVertical: 15,
   },
-  botoesContainer: {
+  gradeBotoes: {
+    width: '100%',
+    gap: 8,
+  },
+  linhaHorizontal: {
     flexDirection: 'row',
-    gap: 10,
+    justifyContent: 'space-between',
+    marginBottom: 2,
   },
-  botao: {
+  botaoQuadrado: {
     width: 65,
     height: 45,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  botaoLongo: {
+    width: 138, 
+    height: 45,
     borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  botaoMais: {
-    backgroundColor: '#006437',
-  },
-  botaoMenos: {
-    backgroundColor: '#800020',
-  },
+
+  corMais: { backgroundColor: '#005D3B' },
+  corMenos: { backgroundColor: '#800A26' },
+  corTruco: { backgroundColor: '#005A66' },
+  corSeis: { backgroundColor: '#002C61' },
+  corNove: { backgroundColor: '#450061' },
+  corDoze: { backgroundColor: '#610000' },
+  
   textoBotao: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  textoAposta: {
+    color: 'white',
+    fontSize: 15,
     fontWeight: 'bold',
   },
 });
