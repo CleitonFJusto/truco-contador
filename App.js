@@ -20,15 +20,15 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Logo no Topo */}
+
       <View style={styles.header}>
         <Image source={unipar} style={styles.logo} />
       </View>
 
-      {/* Área dos Placares Lado a Lado */}
+      
       <View style={styles.placarContainer}>
         
-        {/* Coluna NÓS */}
+        
         <View style={styles.coluna}>
           <Text style={styles.titulo}>NÓS</Text>
           <Text style={styles.numero}>{nos}</Text>
@@ -48,7 +48,7 @@ export default function App() {
           </View>
         </View>
 
-        {/* Coluna ELES */}
+        
         <View style={styles.coluna}>
           <Text style={styles.titulo}>ELES</Text>
           <Text style={styles.numero}>{eles}</Text>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   placarContainer: {
-    flexDirection: 'row', // Coloca as colunas lado a lado
+    flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   numero: {
-    fontSize: 80, // Aumentado para destaque
+    fontSize: 80,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 30,
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   botaoMais: {
-    backgroundColor: '#006437', // Verde escuro da imagem
+    backgroundColor: '#006437',
   },
   botaoMenos: {
-    backgroundColor: '#800020', // Vinho/Bordô da imagem
+    backgroundColor: '#800020',
   },
   textoBotao: {
     color: 'white',
