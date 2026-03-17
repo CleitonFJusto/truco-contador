@@ -3,16 +3,30 @@ import { useState } from "react";
 import unipar from "./assets/unipar.png";
 
 export default function App() {
-  const [nos, setNos] = useState(10);
-  const [eles, setEles] = useState(10);
+  const [nos, setNos] = useState(0);
+  const [eles, setEles] = useState(0);
+  const [vitoriasNos, setVitoriasNos] = useState(0);
+  const [vitoriasEles, setVitoriasEles] = useState(0);
 
   const adicionarPontos = (time, pontos) => {
     if (time === 'nos') {
       const novoValor = nos + pontos;
-      setNos(novoValor >= 12 ? 12 : novoValor);
+      if (novoValor >= 12) {
+        setNos(0);
+        setEles(0);
+        setVitoriasNos(vitoriasNos + 1);
+      } else {
+        setNos(novoValor);
+      }
     } else {
       const novoValor = eles + pontos;
-      setEles(novoValor >= 12 ? 12 : novoValor);
+      if (novoValor >= 12) {
+        setNos(0);
+        setEles(0);
+        setVitoriasEles(vitoriasEles + 1);
+      } else {
+        setEles(novoValor);
+      }
     }
   };
 
@@ -28,11 +42,10 @@ export default function App() {
       </View>
 
       <View style={styles.placarContainer}>
-        
-
         <View style={styles.coluna}>
           <Text style={styles.titulo}>NÓS</Text>
           <Text style={styles.numero}>{nos}</Text>
+          <Text style={styles.vitorias}>Ganhou {vitoriasNos}</Text>
           
           <View style={styles.gradeBotoes}>
             <View style={styles.linhaHorizontal}>
@@ -59,10 +72,10 @@ export default function App() {
           </View>
         </View>
 
-
         <View style={styles.coluna}>
           <Text style={styles.titulo}>ELES</Text>
           <Text style={styles.numero}>{eles}</Text>
+          <Text style={styles.vitorias}>Ganhou {vitoriasEles}</Text>
           
           <View style={styles.gradeBotoes}>
             <View style={styles.linhaHorizontal}>
@@ -88,7 +101,6 @@ export default function App() {
             </TouchableOpacity>
           </View>
         </View>
-
       </View>
     </SafeAreaView>
   );
@@ -128,7 +140,13 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#333',
-    marginVertical: 15,
+    marginTop: 15,
+  },
+  vitorias: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#444',
+    marginBottom: 15,
   },
   gradeBotoes: {
     width: '100%',
@@ -153,14 +171,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   corMais: { backgroundColor: '#005D3B' },
   corMenos: { backgroundColor: '#800A26' },
   corTruco: { backgroundColor: '#005A66' },
   corSeis: { backgroundColor: '#002C61' },
   corNove: { backgroundColor: '#450061' },
   corDoze: { backgroundColor: '#610000' },
-  
   textoBotao: {
     color: 'white',
     fontSize: 22,
